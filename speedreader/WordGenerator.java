@@ -118,4 +118,4 @@ public class WordGenerator {
 			System.out.println("File not found!");
 		}
 	}
-} 
+}
