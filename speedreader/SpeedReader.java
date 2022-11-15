@@ -15,6 +15,10 @@ import java.io.FileNotFoundException;
  * (e.g., CSC 207 students) about the solution to this problem.
  */
 
+/**
+ * The SpeedReader class functions as a speed reader, a program that allows users
+ * to read texts quickly at different speeds.
+ */
 public class SpeedReader {	
 	/**
 	 * Constants for the time conversion and fonts used in every SpeedReader

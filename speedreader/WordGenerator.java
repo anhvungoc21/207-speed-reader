@@ -4,6 +4,11 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 
+/**
+ * The WordGenerator class acts as a wrapper for a Scanner object 
+ * of a text file to read from. An instance of this class is used
+ * in a SpeedReader to parse text from a text file.
+ */
 public class WordGenerator {
 
 	/**
