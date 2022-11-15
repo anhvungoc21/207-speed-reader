@@ -42,13 +42,13 @@ public class WordGenerator {
 		Scanner fscan = new Scanner(new File(filename));
 		while (fscan.hasNext()) {
 			String word = fscan.next();
-
-			// See if sentence contains sentence periods
+			
+			// Increment count if word is sentence-ending
 			if (isEndingWord(word)) {
-				word = word.substring(0, word.length() - 1);
 				sentenceCount++;
 			}
 			
+			// Add word to array and increment word count
 			this.words.add(word);
 			wordCount++;
 		}
@@ -102,20 +102,5 @@ public class WordGenerator {
 			return true;
 		}
 		return false;
-	}
-	
-	// TESTING
-	public static void main (String[] args) {
-		try {
-			WordGenerator wg = new WordGenerator("test.txt");
-			System.out.println(wg.getWordCount());
-			System.out.println(wg.getSentenceCount());
-			
-			while (wg.hasNext()) {
-				System.out.println(wg.next());
-			}
-	 	} catch (FileNotFoundException e) {
-			System.out.println("File not found!");
-		}
 	}
 }
