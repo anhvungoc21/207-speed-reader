@@ -2,8 +2,6 @@ package speedreader;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
 
 public class WordGenerator {
@@ -19,14 +17,10 @@ public class WordGenerator {
 	private int sentenceCount;
 	
 	/**
-	 * Private field for keeping track of current index in `words` List
+	 * Private field for keeping track of the inner scanner that this
+	 * WordGenerator wraps around
 	 */
-	private int curIndex;
-	
-	/**
-	 * Private field for storing words read in by the constructor
-	 */
-	private List<String> words;
+	private Scanner wordsScanner;
 	
 	/**
 	 * Constructor for a WordGenerator object
@@ -35,25 +29,8 @@ public class WordGenerator {
 	 */
 	public WordGenerator(String filename) throws FileNotFoundException {
 		this.wordCount = 0;
-		this.sentenceCount = 0;
-		this.curIndex = 0;
-		this.words = new ArrayList<>();
-		
-		Scanner fscan = new Scanner(new File(filename));
-		while (fscan.hasNext()) {
-			String word = fscan.next();
-			
-			// Increment count if word is sentence-ending
-			if (isEndingWord(word)) {
-				sentenceCount++;
-			}
-			
-			// Add word to array and increment word count
-			this.words.add(word);
-			wordCount++;
-		}
-		
-		fscan.close();
+		this.sentenceCount = 0;		
+		this.wordsScanner = new Scanner(new File(filename));
 	}
 	
 	/**
@@ -61,7 +38,13 @@ public class WordGenerator {
 	 * @return a boolean value of whether this WordGenerator has text left to process
 	 */
 	public boolean hasNext() {
-		return this.curIndex < this.words.size();
+		if (this.wordsScanner.hasNext()) {
+			return true;
+		} else {
+			// Close scanner upon finding no words left
+			this.wordsScanner.close();
+			return false;
+		}
 	}
 	
 	/**
@@ -69,7 +52,14 @@ public class WordGenerator {
 	 * @return A String of the next word in this WordGenerator
 	 */
 	public String next() {
-		return this.words.get(curIndex++);
+		String word = this.wordsScanner.next();
+		
+		// If word is sentence-ending, add to sentence count
+		if (isEndingWord(word)) this.sentenceCount++;	
+		
+		// Regardless, add to word count and return word
+		this.wordCount++;
+		return word;
 	}
 	
 	/**
@@ -96,7 +86,7 @@ public class WordGenerator {
 	 * @param word The word to be checked
 	 * @return Boolean value of whether a word ends a sentence
 	 */
-	private boolean isEndingWord(String word) {
+	private static boolean isEndingWord(String word) {
 		char end = word.charAt(word.length() - 1);
 		if (end == '.' || end == '!' || end == '?') {
 			return true;

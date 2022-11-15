@@ -16,6 +16,9 @@ import java.io.FileNotFoundException;
  */
 
 public class SpeedReader {	
+	/**
+	 * Constants for the time conversion and fonts used in every SpeedReader
+	 */
 	private static final int msPerMin = 60000;
 	private static final int defaultFontStyle = Font.BOLD;
 	private static final String defaultFontName = "Courier";
